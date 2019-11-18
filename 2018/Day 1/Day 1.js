@@ -1,5 +1,8 @@
-var fs = require("fs");
-var text = fs.readFileSync("./Puzzle Input");
-var textByLine = text.split("\n")
+var fs = require('fs');
+var array = fs
+  .readFileSync('PuzzleInput.txt')
+  .toString()
+  .split('\r\n')
+  .map(Number);
 
-console.log(textByLine)
+console.log(array);
