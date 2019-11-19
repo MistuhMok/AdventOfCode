@@ -31,3 +31,29 @@ function countChars() {
 }
 
 // countChars();
+
+//Part 2 - Find the 2 strings that only differ by 2 characters
+function findSimilar() {
+  for (let i = 0; i < arr.length; i++) {
+    const str = arr[i];
+    for (let j = 0; j < arr.length; j++) {
+      if (i === j) continue;
+      const str2 = arr[j];
+      let diffIndex = 0;
+      let diff = 0;
+      let check = 0;
+
+      while (diff < 2 && check < str.length) {
+        if (str[check] !== str2[check]) {
+          diff++;
+          diffIndex = check;
+        }
+        check++;
+      }
+
+      if (diff < 2) return str.slice(0, diffIndex) + str.slice(diffIndex + 1);
+    }
+  }
+}
+
+console.log(findSimilar());
