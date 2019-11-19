@@ -33,6 +33,7 @@ function countChars() {
 // countChars();
 
 //Part 2 - Find the 2 strings that only differ by 2 characters
+//Returns agimdjvlhedpsyoqfzuknpjwt
 function findSimilar() {
   for (let i = 0; i < arr.length; i++) {
     const str = arr[i];
