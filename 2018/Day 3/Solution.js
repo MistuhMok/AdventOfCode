@@ -67,4 +67,41 @@ function overlap() {
   console.log(count);
 }
 
-overlap();
+// overlap();
+
+//Part 2 - Find claim that doesn't overlap at all
+//Returns 717
+function noOverlap() {
+  const board = [];
+  for (let i = 0; i < 1000; i++) {
+    board.push(new Array(1000).fill(0));
+  }
+
+  let pointer = 0;
+  let count = 0;
+  let res = new Set();
+
+  while (pointer < height.length) {
+    let row = height[pointer];
+    let col = width[pointer];
+    res.add(pointer + 1);
+
+    for (let i = 0; i < row[1]; i++) {
+      for (let j = 0; j < col[1]; j++) {
+        if (board[row[0] + i][col[0] + j] > 0) {
+          count++;
+          res.delete(pointer + 1);
+          res.delete(board[row[0] + i][col[0] + j]);
+          board[row[0] + i][col[0] + j] = -1;
+        } else if (board[row[0] + i][col[0] + j] === -1)
+          res.delete(pointer + 1);
+        else board[row[0] + i][col[0] + j] = pointer + 1;
+      }
+    }
+
+    pointer++;
+  }
+  console.log(res);
+}
+
+noOverlap();
