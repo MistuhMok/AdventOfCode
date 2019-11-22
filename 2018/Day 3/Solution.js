@@ -78,7 +78,6 @@ function noOverlap() {
   }
 
   let pointer = 0;
-  let count = 0;
   let res = new Set();
 
   while (pointer < height.length) {
