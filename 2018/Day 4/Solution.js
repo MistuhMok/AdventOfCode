@@ -25,6 +25,8 @@ const shifts = createGuardShifts();
 const sleepData = organizeData();
 
 //Part 1 - Find guard with most minutes asleep and most common minute asleep
+//Returns 1571 * 54 = 84834
+
 //Not all guards fall asleep
 //Some guards fall asleep multiple times throughout a shift
 
@@ -158,3 +160,43 @@ function calculate() {
 }
 
 calculate();
+
+//Part 2 - Find which guard is asleep the most frequently at the same minute
+//Returns 1619 * 33 = 53427
+
+function findGuard() {
+  const guards = {};
+  const guardsCommonTime = {};
+  let max = 0;
+  let guardResult;
+
+  for (let date in shifts) {
+    const guardId = shifts[date];
+    const fallAsleep = sleepData[date][0];
+    const wakesUp = sleepData[date][1];
+
+    if (guards[guardId] === undefined) guards[guardId] = new Array(60).fill(0);
+
+    fallAsleep.sort((a, b) => +a - +b);
+    wakesUp.sort((a, b) => +a - +b);
+
+    for (let i = 0; i < fallAsleep.length; i++) {
+      let start = fallAsleep[i];
+      let end = wakesUp[i];
+      while (start < end) guards[guardId][start++]++;
+    }
+  }
+
+  for (let guard in guards) {
+    let curr = Math.max(...guards[guard]);
+    let index = guards[guard].indexOf(curr);
+    guardsCommonTime[guard] = { minute: index, frequency: curr };
+
+    if (curr > max) {
+      max = curr;
+      guardResult = guard;
+    }
+  }
+  console.log(+guardResult * guardsCommonTime[guardResult].minute);
+}
+findGuard();
