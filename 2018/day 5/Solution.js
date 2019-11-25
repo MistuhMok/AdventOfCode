@@ -1,15 +1,16 @@
 const fs = require('fs');
 const string = fs.readFileSync('PuzzleInput.txt').toString();
 
-// console.log(string.length);
-
 //Part 1 - Remove capital lowercase pairs
 //Returns 11042
 
-function removePairs() {
+// let string = 'dabAcCaCBAcCcaDA ';
+function removePairs(char = '', char2 = '') {
   let res = [];
 
   for (let i = 0; i < string.length - 1; i++) {
+    if (string[i] === char || string[i] === char2) continue;
+
     res.push(string[i]);
     if (res.length > 1) {
       let len = res.length;
@@ -27,7 +28,29 @@ function removePairs() {
   }
 
   //Input has a blank space at the end
-  console.log(res.length);
+  return res.length;
 }
 
-removePairs();
+// removePairs();
+
+//Part 2 - What is the shortest string if 1 letter is removed entirely
+//Returns 6872
+
+function shortestRemoval() {
+  let min = Infinity;
+
+  for (let i = 0; i < 26; i++) {
+    let upperCharCode = 65 + i;
+    let lowerCharCode = 97 + i;
+    let currMin = removePairs(
+      String.fromCharCode(upperCharCode),
+      String.fromCharCode(lowerCharCode)
+    );
+
+    if (min > currMin) min = currMin;
+  }
+
+  console.log(min);
+}
+
+shortestRemoval();
