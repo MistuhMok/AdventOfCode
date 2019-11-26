@@ -68,4 +68,29 @@ function findLargestArea() {
   console.log(Math.max(...areas));
 }
 
-findLargestArea();
+// findLargestArea();
+
+//Part 2 - Find the size of the region with total distance to all coords less than 10000
+//Returns 40284
+function findSafeArea() {
+  let count = 0;
+
+  for (let row = 0; row <= maxRow; row++) {
+    for (let col = 0; col <= maxCol; col++) {
+      let totalDistance = 0;
+
+      for (let c = 0; c < array.length; c++) {
+        totalDistance +=
+          Math.abs(array[c][0] - col) + Math.abs(array[c][1] - row);
+      }
+
+      if (totalDistance < 10000) {
+        count++;
+      }
+    }
+  }
+
+  console.log(count);
+}
+
+findSafeArea();
