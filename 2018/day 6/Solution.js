@@ -6,7 +6,6 @@ let minCol = Infinity;
 let minRow = Infinity;
 
 const array = parseInput();
-console.log(maxCol, maxRow, minCol, minRow);
 function parseInput() {
   return (
     fs
@@ -34,6 +33,7 @@ function parseInput() {
 array.length = array.length - 1;
 
 //Part 1 - Find the largest area around a coordinate
+//Returns 3890
 function findLargestArea() {
   let areas = new Array(array.length).fill(0);
 
@@ -42,6 +42,9 @@ function findLargestArea() {
       let minDistance = Infinity;
       let minCoordIndex;
       let duplicate = false;
+      let valid = true;
+
+      //Find the min distance between current square and list of coords
       for (let c = 0; c < array.length; c++) {
         let currDistance =
           Math.abs(array[c][0] - col) + Math.abs(array[c][1] - row);
@@ -50,31 +53,19 @@ function findLargestArea() {
           minCoordIndex = c;
           duplicate = false;
         } else if (minDistance === currDistance) duplicate = true;
+
+        //If a square is outside of the max area the coordinate associated with it is invalid
+        if (row < minCol || row > maxCol || col < minRow || col > maxRow) {
+          valid = false;
+        }
       }
 
-      if (!duplicate) {
-        // console.log(x,y)
-        areas[minCoordIndex]++;
-      }
+      if (!valid) areas[minCoordIndex] = Number.NEGATIVE_INFINITY;
+      else if (!duplicate) areas[minCoordIndex]++;
     }
   }
 
-  let largestArea = 0;
-  for (let i = 0; i < array.length; i++) {
-    let currX = array[i][0];
-    let currY = array[i][1];
-
-    // console.log(currX, currY, minCol, maxCol, minRow, maxRow);
-    if (
-      currX <= minCol ||
-      currX >= maxCol ||
-      currY <= minRow ||
-      currY >= maxRow
-    )
-      continue;
-    if (areas[i] > largestArea) largestArea = areas[i];
-  }
-  console.log(areas);
+  console.log(Math.max(...areas));
 }
 
 findLargestArea();
