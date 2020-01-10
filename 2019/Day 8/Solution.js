@@ -29,7 +29,36 @@ function parseImage() {
     }
 
     //Multiply the number of 1s by the number of 2s
+    //Returns 2048
     console.log(image.replace(/[^1]/g, "").length * image.replace(/[^2]/g, "").length)
+
+    let finalImage = ''
+    //Parse image based on pixels
+    // 0 is black, 1 is white, and 2 is transparent
+    while(finalImage.length < imageSize){
+        let imagePointer = 0
+        let currPointer = finalImage.length
+        let currImage = res[imagePointer]
+        while(currImage[currPointer]==='2') {
+            imagePointer++
+            currImage = res[imagePointer]
+            if(currImage === undefined) {
+                currImage = '2'.repeat(imageSize)
+                break;
+            }
+        }
+        
+        finalImage += currImage[currPointer]
+    }
+
+    let finalImageLine = 0
+    finalImage = finalImage.replace(/0/g, '-')
+    while(finalImageLine < finalImage.length){
+        console.log(finalImage.substring(finalImageLine, finalImageLine + 25))
+        finalImageLine += 25
+    }
+
+    //Returns HFYAK
 }
 
 parseImage()
